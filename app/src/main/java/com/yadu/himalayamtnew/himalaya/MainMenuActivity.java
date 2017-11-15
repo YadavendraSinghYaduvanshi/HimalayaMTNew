@@ -1,15 +1,19 @@
 package com.yadu.himalayamtnew.himalaya;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,10 +23,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 
 import com.yadu.himalayamtnew.R;
 import com.yadu.himalayamtnew.constants.CommonString;
 import com.yadu.himalayamtnew.database.HimalayaDb;
+import com.yadu.himalayamtnew.download.DownloadActivity;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -36,6 +42,9 @@ public class MainMenuActivity extends AppCompatActivity
     private SharedPreferences preferences = null;
     private String date, user_name, user_type, visit_date;
     HimalayaDb database;
+
+    FrameLayout frameLayout;
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +69,11 @@ public class MainMenuActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View headerView = LayoutInflater.from(this).inflate(R.layout.nav_header_main_menu, navigationView, false);
+        navigationView.addHeaderView(headerView);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     @Override
@@ -98,7 +110,7 @@ public class MainMenuActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(MenuItem item) {return true;}/*{
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
@@ -136,7 +148,7 @@ public class MainMenuActivity extends AppCompatActivity
                                     alert.show();
                                     // Toast.makeText(getBaseContext(), AlertMessage.MESSAGE_NO_DATA, Toast.LENGTH_LONG).show();
                                 } else {
-                                    Intent startDownload = new Intent(getApplicationContext(), CompleteDownloadActivity.class);
+                                    Intent startDownload = new Intent(getApplicationContext(), DownloadActivity.class);
                                     startActivity(startDownload);
                                     finish();
                                 }
@@ -167,10 +179,10 @@ public class MainMenuActivity extends AppCompatActivity
 
                             if (checkNetIsAvailable()) {
                                 jcplist = database.getJCPData(date);
-                               /* if (jcplist.size() == 0) {
+                               *//* if (jcplist.size() == 0) {
                                     Snackbar.make(frameLayout, "Please Download Data First", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
                                     //  Toast.makeText(getBaseContext(), "Please Download Data First", Toast.LENGTH_LONG).show();
-                                }*/
+                                }*//*
                                 //it works even there is no jcp
                                 if (database.isSkuMasterDownloaded()) {
 
@@ -204,9 +216,9 @@ public class MainMenuActivity extends AppCompatActivity
                                             }
                                         }
                                     }
-                    /*intent = new Intent(getBaseContext(),UploadOptionActivity.class);
+                    *//*intent = new Intent(getBaseContext(),UploadOptionActivity.class);
                     startActivity(intent);
-					MainMenuActivity.this.finish();*/
+					MainMenuActivity.this.finish();*//*
 
                                 }else {
 
@@ -313,7 +325,7 @@ public class MainMenuActivity extends AppCompatActivity
             AlertDialog alert1 = builder1.create();
             alert1.show();
 
-        } /*else if (id == R.id.nav_payslip) {
+        } *//*else if (id == R.id.nav_payslip) {
             jcplist = database.getJCPData(date);
 
             if (jcplist.size() == 0) {
@@ -329,15 +341,18 @@ public class MainMenuActivity extends AppCompatActivity
                     overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
                 }
             }
-        }*/
+        }*//*
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
+    }*/
 
     void declaration()
     {
+
+        frameLayout = (FrameLayout) findViewById(R.id.frame_layout);
+
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         user_name = preferences.getString(CommonString.KEY_USERNAME, null);
@@ -346,5 +361,15 @@ public class MainMenuActivity extends AppCompatActivity
 
         database = new HimalayaDb(this);
         database.open();
+    }
+
+    public boolean checkNetIsAvailable() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        return isConnected;
     }
 }

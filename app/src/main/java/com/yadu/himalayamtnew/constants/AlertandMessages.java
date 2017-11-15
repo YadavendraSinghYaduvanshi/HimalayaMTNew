@@ -9,8 +9,6 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.Toast;
 
-import com.cpm.gskgtmerchandiser.R;
-import com.cpm.gskgtmerchandiser.dailyentry.POSMSubMenuActivity;
 import com.yadu.himalayamtnew.R;
 
 /**
@@ -26,6 +24,10 @@ public class AlertandMessages {
         this.activity = activity;
         this.data = data;
         this.condition = condition;
+    }
+
+    public AlertandMessages(Activity activity) {
+        this.activity = activity;
     }
 
     public static void showSnackbarMsg(View view, String message) {

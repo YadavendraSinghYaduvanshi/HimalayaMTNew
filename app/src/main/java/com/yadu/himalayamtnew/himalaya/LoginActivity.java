@@ -27,6 +27,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.yadu.himalayamtnew.R;
+import com.yadu.himalayamtnew.autoupdate.AutoUpdateActivity;
 import com.yadu.himalayamtnew.constants.AlertandMessages;
 import com.yadu.himalayamtnew.constants.CommonFunctions;
 import com.yadu.himalayamtnew.constants.CommonString;
@@ -395,7 +396,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
 
                     finish();
                 } else {
-                    Intent intent = new Intent(getBaseContext(), AutoUp.class);
+                    Intent intent = new Intent(getBaseContext(), AutoUpdateActivity.class);
                     intent.putExtra(CommonString.KEY_PATH, preferences.getString(CommonString.KEY_PATH, ""));
                     startActivity(intent);
                     finish();

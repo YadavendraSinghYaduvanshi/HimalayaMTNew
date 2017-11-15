@@ -28,4 +28,17 @@ public class CommonString {
     public static final String KEY_SUCCESS = "Success";
     public static final String MESSAGE_EXCEPTION = "Problem Occured : Report The Problem To Parinaam";
     public static final String MESSAGE_SOCKETEXCEPTION = "Network Communication Failure. Check Your Network Connection";
+    public static final String KEY_STATUS = "STATUS";
+    public static final String KEY_NEW_UPDATE = "New Update Available";
+
+    public static final String METHOD_NAME_UNIVERSAL_DOWNLOAD = "Download_Universal";
+    public static final String SOAP_ACTION_UNIVERSAL = "http://tempuri.org/"
+            + METHOD_NAME_UNIVERSAL_DOWNLOAD;
+
+    public static final String URL_Notice_Board = "http://himalaya.parinaam.in/notice/notice.html";
+
+    public static final String MESSAGE_DOWNLOAD = "Data Downloaded Successfully";
+    public static final String MESSAGE_UPLOAD_DATA = "Data Uploaded Successfully";
+    public static final String MESSAGE_UPLOAD_IMAGE = "Images Uploaded Successfully";
+    public static final String MESSAGE_JCP_FALSE = "Data is not found in ";
 }
